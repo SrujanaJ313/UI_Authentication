@@ -22,7 +22,7 @@ export default function LoginPage() {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required").email("Invalid email"),
+    email: Yup.string().required("Email is required").matches(/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/, "Invalid email"),
     password: Yup.string().required("Password is required"),
   });
 
