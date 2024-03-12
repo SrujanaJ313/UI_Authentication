@@ -39,7 +39,7 @@ import client from '../../helpers/Api';
 
 
 import Loader from '../../components/loader/Loader';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function MSLReferenceList() {
 
@@ -57,6 +57,7 @@ export default function MSLReferenceList() {
 
 
     useEffect(() => {
+        toast("User Logged in Successfully!");
         fetchMSLReferencesList({ offset: 0, limit: 10 })
     }, [])
 
