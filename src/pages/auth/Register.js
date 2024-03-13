@@ -16,11 +16,16 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { validatePassword } from "../../utils/common";
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Register() {
   const navigate = useNavigate();
   const handleSubmit = (values) => {
     console.log(values);
+    toast("Registered Successfully!");
+    setTimeout(() => {
+        navigate('/login');
+    }, 3 * 1000)
   };
 
   const validationSchema = Yup.object().shape({
@@ -49,6 +54,7 @@ export default function Register() {
   });
 
   return (
+    <>
     <Container component="main" maxWidth="sm">
       <Box
         sx={{
@@ -284,5 +290,7 @@ export default function Register() {
         </Button>
       </Box>
     </Container>
+    <ToastContainer />
+    </>
   );
 }
