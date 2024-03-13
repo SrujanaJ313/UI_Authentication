@@ -26,12 +26,13 @@ export default function Register() {
   const validationSchema = Yup.object().shape({
     userID: Yup.string().required("User ID is required"),
     // password: Yup.string().required("Password is required"),
-    password: Yup.string().required("Password is required"),
-    //   .min(8, ["Password must be 8 characters long"])
-    //   .matches(/[0-9]/, "Password requires a number")
-    //   .matches(/[a-z]/, "Password requires a lowercase letter")
-    //   .matches(/[A-Z]/, "Password requires an uppercase letter")
-    //   .matches(/[^\w]/, "Password requires a symbol"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, ["Password must be 8 characters long"])
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
@@ -109,20 +110,24 @@ export default function Register() {
                 }
                 helperText={formik.touched.password && formik.errors.password}
               />
-              {formik.touched.password && (
-                <div>
-                  {validatePassword(formik.values.password).map((err) => (
-                    <div style={{ fontSize: 12, color: err.errorCode }} key={err.description}>
-                      {err.errorCode === "red" ? (
-                        <span>&#10008;</span>
-                      ) : (
-                        <span>&#10004;</span>
-                      )}
-                      {err.description}
-                    </div>
-                  ))}
-                </div>
-              )}
+              {formik.touched.password &&
+                formik.errors.password && (
+                  <div>
+                    {validatePassword(formik.values.password).map((err) => (
+                      <div
+                        style={{ fontSize: 12, color: err.errorCode }}
+                        key={err.description}
+                      >
+                        {err.errorCode === "red" ? (
+                          <span>&#10008;</span>
+                        ) : (
+                          <span>&#10004;</span>
+                        )}
+                        {err.description}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
               <TextField
                 size="small"
