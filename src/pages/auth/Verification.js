@@ -11,13 +11,13 @@ import { useState } from "react";
 export default function Verification() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [{ otpValue1, otpValue2, otpValue3, otpValue4 }, setOtpValue] =
-    useState({
-      otpValue1: "",
-      otpValue2: "",
-      otpValue3: "",
-      otpValue4: "",
-    });
+  const initialOtpValues = {
+    otpValue1: "",
+    otpValue2: "",
+    otpValue3: "",
+    otpValue4: "",
+  };
+  const [{ otpValue1, otpValue2, otpValue3, otpValue4 }, setOtpValue] = useState(initialOtpValues);
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
@@ -141,7 +141,14 @@ export default function Verification() {
             sx={{ m: 2, fontSize: "1rem" }}
           >
             Didn't get the code?
-            <Link href="#" underline="hover">
+            <Link
+              onClick={() => {
+                navigate("/verification");
+                setError("");
+                setOtpValue(initialOtpValues);
+              }}
+              underline="hover"
+            >
               Resend it
             </Link>
           </Grid>
