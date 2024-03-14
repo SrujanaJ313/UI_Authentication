@@ -17,19 +17,19 @@ export default function ForgotPwd() {
     if (!emailOrMobile) {
       setError("Email/Mobile Number is required");
       return;
+    } else if (error) {
+      // else if (!isValidEmail(emailOrMobile) && !isValidMobile(emailOrMobile)) {
+      setError("Invalid email/mobile number");
     }
-    // else if (!isValidEmail(emailOrMobile) && !isValidMobile(emailOrMobile)) {
-    //   setError("Invalid email/mobile number");
-    // }
-    // else {
+    else {
     navigate("/verification", {
       state: {
         email: emailOrMobile,
       },
     });
-    // }
-  };
 
+  };
+  }
   const onChangeHandler = (event) => {
     const {
       target: { value },
