@@ -15,20 +15,37 @@ export default function ForgotPwd() {
 
   const handleSubmit = () => {
     if (!emailOrMobile) {
-      setError("Email is required");
-    } else if (!isValidEmail(emailOrMobile)) {
-      setError("Invalid email");
-    } else {
-      navigate("/verification", {
-        state: {
-          email: emailOrMobile
-        }
-      });
+      setError("Email/Mobile Number is required");
+      return;
     }
+    // else if (!isValidEmail(emailOrMobile) && !isValidMobile(emailOrMobile)) {
+    //   setError("Invalid email/mobile number");
+    // }
+    // else {
+    navigate("/verification", {
+      state: {
+        email: emailOrMobile,
+      },
+    });
+    // }
+  };
+
+  const onChangeHandler = (event) => {
+    const {
+      target: { value },
+    } = event;
+    if (!isValidEmail(value) && !isValidMobile(value)) {
+      setError("Invalid email/mobile number");
+    } else {
+      setError("");
+    }
+    setEmailOrMobile(value);
   };
 
   const isValidEmail = (value) => {
-    return /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/.test(value);
+    return /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/.test(
+      value
+    );
   };
 
   const isValidMobile = (value) => {
@@ -70,9 +87,8 @@ export default function ForgotPwd() {
           fullWidth
           margin="normal"
           value={emailOrMobile}
-          onChange={(event) => {
-            setEmailOrMobile(event.target.value);
-          }}
+
+          onChange={onChangeHandler}
           error={Boolean(error)}
           helperText={error}
           sx={{ width: "100%", mt: 2 }}
