@@ -87,7 +87,6 @@ export default function ForgotPwd() {
           fullWidth
           margin="normal"
           value={emailOrMobile}
-
           onChange={onChangeHandler}
           error={Boolean(error)}
           helperText={error}

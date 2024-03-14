@@ -4,95 +4,150 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { Link, useLocation } from "react-router-dom";
-import OTPicon from '../../../src/assets/images/otp-icon.png'
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import OTPicon from "../../../src/assets/images/otp-icon.png";
+import { toast, ToastContainer } from "react-toastify";
+import { useState } from "react";
 export default function Verification() {
-  const location = useLocation()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [{ otpValue1, otpValue2, otpValue3, otpValue4 }, setOtpValue] =
+    useState({
+      otpValue1: "",
+      otpValue2: "",
+      otpValue3: "",
+      otpValue4: "",
+    });
+  const [error, setError] = useState("");
 
   const handleSubmit = () => {
     // Handle form submission
+    const otpValue = `${otpValue1}${otpValue2}${otpValue3}${otpValue4}`;
+    if (!isValidOtp(otpValue)) {
+      setError("Invalid OTP");
+      return;
+    }
+    toast("Verified Successfully!");
+    setTimeout(() => {
+      navigate("/login");
+    }, 2 * 1000);
+  };
+
+  const isValidOtp = (value) => {
+    return /^[0-9]{4}$/.test(value);
+  };
+
+  const onChangeHandler = (event) => {
+    setOtpValue((prevOtpValue) => ({
+      ...prevOtpValue,
+      [event.target.name]: event.target.value,
+    }));
   };
 
   return (
-    <Container component="main" maxWidth="sm">
-      <Box
-        sx={{
-          boxShadow: 3,
-          borderRadius: 2,
-          px: 4,
-          py: 2,
-          marginTop: 15,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h3" fontWeight="900">
-          NHUIS
-        </Typography>
-        <Typography style={{ margin: '20px', fontSize: '1.6rem' }}>
-          Two-Step Verification
-        </Typography>
-        <img src={OTPicon} />
-        <Typography textAlign="center" fontSize="1.4rem" style={{ marginTop: '20px' }}>
-          Enter the verification code we sent to<br></br>
-          <span style={{ fontWeight: 'bold' }}>{location.state.email}</span>
-        </Typography>
-        <form onSubmit={handleSubmit}>
-
-          <Box sx={{ display: 'flex', gap: '10px' }}>
-            <TextField
-              size="small"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              inputProps={{ maxLength: 1, style: { textAlign: 'center' } }}
-            />
-
-            <TextField
-              size="small"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              inputProps={{ maxLength: 1, style: { textAlign: 'center' } }}
-            />
-
-            <TextField
-              size="small"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              inputProps={{ maxLength: 1, style: { textAlign: 'center' } }}
-            />
-
-            <TextField
-              size="small"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              inputProps={{ maxLength: 1, style: { textAlign: 'center' } }}
-            />
-
-          </Box>
-
-          <Button
-            size="small"
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, textTransform: "none", fontSize: "1.2rem" }}
+    <>
+      <Container component="main" maxWidth="sm">
+        <Box
+          sx={{
+            boxShadow: 3,
+            borderRadius: 2,
+            px: 4,
+            py: 2,
+            marginTop: 15,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h3" fontWeight="900">
+            NHUIS
+          </Typography>
+          <Typography style={{ margin: "20px", fontSize: "1.6rem" }}>
+            Two-Step Verification
+          </Typography>
+          <img src={OTPicon} />
+          <Typography
+            textAlign="center"
+            fontSize="1.4rem"
+            style={{ marginTop: "20px" }}
           >
-            Verify
-          </Button>
-        </form>
+            Enter the verification code we sent to<br></br>
+            <span style={{ fontWeight: "bold" }}>{location?.state?.email}</span>
+          </Typography>
+          <form>
+            <Box sx={{ display: "flex", gap: "10px" }}>
+              <TextField
+                name="otpValue1"
+                size="small"
+                variant="outlined"
+                value={otpValue1}
+                onChange={onChangeHandler}
+                fullWidth
+                margin="normal"
+                inputProps={{ maxLength: 1, style: { textAlign: "center" } }}
+              />
 
-        <Grid item container justifyContent="center" sx={{ m: 2, fontSize: "1rem" }}>
-          Didn't get the code?
-          <Link href="#" underline="hover">
-            Resend it
-          </Link>
-        </Grid>
-      </Box>
-    </Container>
+              <TextField
+                name="otpValue2"
+                size="small"
+                variant="outlined"
+                value={otpValue2}
+                onChange={onChangeHandler}
+                fullWidth
+                margin="normal"
+                inputProps={{ maxLength: 1, style: { textAlign: "center" } }}
+              />
+
+              <TextField
+                name="otpValue3"
+                size="small"
+                variant="outlined"
+                value={otpValue3}
+                onChange={onChangeHandler}
+                fullWidth
+                margin="normal"
+                inputProps={{ maxLength: 1, style: { textAlign: "center" } }}
+              />
+
+              <TextField
+                name="otpValue4"
+                size="small"
+                variant="outlined"
+                value={otpValue4}
+                onChange={onChangeHandler}
+                fullWidth
+                margin="normal"
+                inputProps={{ maxLength: 1, style: { textAlign: "center" } }}
+              />
+            </Box>
+            {error && <p style={{ fontSize: 15, color: "red" }}>{error}</p>}
+
+            <Button
+              size="small"
+              // type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, textTransform: "none", fontSize: "1.2rem" }}
+              onClick={handleSubmit}
+            >
+              Verify
+            </Button>
+          </form>
+
+          <Grid
+            item
+            container
+            justifyContent="center"
+            sx={{ m: 2, fontSize: "1rem" }}
+          >
+            Didn't get the code?
+            <Link href="#" underline="hover">
+              Resend it
+            </Link>
+          </Grid>
+        </Box>
+      </Container>
+      <ToastContainer />
+    </>
   );
 }
