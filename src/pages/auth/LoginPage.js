@@ -9,6 +9,8 @@ import { Divider, FormGroup } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -90,7 +92,7 @@ export default function LoginPage() {
               >
                 Log In
               </Button>
-
+              <div style={{display:'flex', justifyContent:'center'}}><FormControlLabel control={<Checkbox />} label="Remember Me" /></div>
             </form>
           )}
         </Formik>
