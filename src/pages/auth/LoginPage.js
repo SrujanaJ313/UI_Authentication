@@ -64,6 +64,7 @@ export default function LoginPage() {
                 value={formik.values.email}
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
+                label="Email Address"
               />
               <Field
                 as={TextField}
@@ -78,6 +79,7 @@ export default function LoginPage() {
                 value={formik.values.password}
                 error={formik.touched.password && Boolean(formik.errors.password)}
                 helperText={formik.touched.password && formik.errors.password}
+                label="Password"
               />
               <Button
                 type="submit"
