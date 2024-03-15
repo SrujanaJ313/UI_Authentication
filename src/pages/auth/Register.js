@@ -22,9 +22,6 @@ export default function Register() {
   const navigate = useNavigate();
   const handleSubmit = (values) => {
     console.log(values);
-    if (validatePassword(values.password).length) {
-      return;
-    }
     toast("Registered Successfully!");
     setTimeout(() => {
       navigate("/login");
@@ -34,13 +31,13 @@ export default function Register() {
   const validationSchema = Yup.object().shape({
     userID: Yup.string().required("User ID is required"),
     // password: Yup.string().required("Password is required"),
-    // password: Yup.string()
-    //   .required("Password is required")
-    //   .min(8, ["Password must be 8 characters long"])
-    //   .matches(/[0-9]/, "Password requires a number")
-    //   .matches(/[a-z]/, "Password requires a lowercase letter")
-    //   .matches(/[A-Z]/, "Password requires an uppercase letter")
-    //   .matches(/[^\w]/, "Password requires a symbol"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, ["Password must be 8 characters long"])
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
@@ -53,6 +50,9 @@ export default function Register() {
         /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/,
         "Invalid email"
       ),
+    mobileNumber: Yup.string()
+      .required("Mobile Number is required")
+      .matches(/^[0-9]{10}$/, "Invalid Mobile Number"),
     dateOfBirth: Yup.string().required("Date of Birth is required"),
   });
 
@@ -115,36 +115,28 @@ export default function Register() {
                   margin="normal"
                   onChange={formik.handleChange}
                   value={formik.values.password}
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                  helperText={formik.touched.password && formik.errors.password}
+                  // error={
+                  //   formik.touched.password && Boolean(formik.errors.password)
+                  // }
+                  // helperText={formik.touched.password && formik.errors.password}
                   label="Password"
                 />
                 {formik.touched.password &&
-                  validatePassword(formik.values.password).length && (
+                  formik.errors.password && (
                     <div>
-                      {!Array.isArray(
-                        validatePassword(formik.values.password)
-                      ) ? (
-                        <span style={{ fontSize: 12, color: "red" }}>
-                          {validatePassword(formik.values.password)}
-                        </span>
-                      ) : (
-                        validatePassword(formik.values.password).map((err) => (
-                          <div
-                            style={{ fontSize: 12, color: err.errorCode }}
-                            key={err.description}
-                          >
-                            {err.errorCode === "red" ? (
-                              <span>&#10008;</span>
-                            ) : (
-                              <span>&#10004;</span>
-                            )}
-                            {err.description}
-                          </div>
-                        ))
-                      )}
+                      {validatePassword(formik.values.password).map((err) => (
+                        <div
+                          style={{ fontSize: 12, color: err.errorCode }}
+                          key={err.description}
+                        >
+                          {err.errorCode === "red" ? (
+                            <span>&#10008;</span>
+                          ) : (
+                            <span>&#10004;</span>
+                          )}
+                          {err.description}
+                        </div>
+                      ))}
                     </div>
                   )}
 
@@ -230,6 +222,24 @@ export default function Register() {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   label="Email"
+                />
+                <TextField
+                  size="small"
+                  name="mobileNumber"
+                  placeholder="Mobile Number"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={formik.handleChange}
+                  value={formik.values.mobileNumber}
+                  error={
+                    formik.touched.mobileNumber &&
+                    Boolean(formik.errors.mobileNumber)
+                  }
+                  helperText={
+                    formik.touched.mobileNumber && formik.errors.mobileNumber
+                  }
+                  label="Mobile Number"
                 />
 
                 <LocalizationProvider dateAdapter={AdapterMoment}>
