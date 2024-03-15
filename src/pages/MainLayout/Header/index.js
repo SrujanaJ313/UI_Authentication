@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MuiAppBar from "@mui/material/AppBar";
 import { Box, IconButton, Toolbar, Typography, styled } from "@mui/material";
 
@@ -42,7 +42,10 @@ const Header = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
-  toast("Logged in Successfully!");
+
+  useEffect(() => {
+    toast("Logged in Successfully!");
+  },[])
   return (
     <>
       <AppBar position="absolute">
