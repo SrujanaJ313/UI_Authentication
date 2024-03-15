@@ -12,6 +12,7 @@ export default function ForgotPwd() {
   const navigate = useNavigate();
   const [emailOrMobile, setEmailOrMobile] = useState("");
   const [error, setError] = useState("");
+  const location = useLocation();
 
   const handleSubmit = () => {
     if (!emailOrMobile) {
@@ -72,7 +73,7 @@ export default function ForgotPwd() {
           NHUIS
         </Typography>
         <Typography component="h1" variant="h5" fontWeight="500">
-          Forgot password?
+          Forgot {location?.state?.value}
         </Typography>
 
         <Typography sx={{ fontSize: "18px", color: "grey", mt: 4 }}>

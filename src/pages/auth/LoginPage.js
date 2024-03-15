@@ -9,22 +9,30 @@ import { Divider, FormGroup } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const handleSubmit = (values) => {
-    localStorage.setItem("user", JSON.stringify({
-      userId: "123",
-      userName: "Test User",
-      email: "testUser@gmail.com"
-    }))
-    navigate("/msl-reference-list")
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        userId: "123",
+        userName: "Test User",
+        email: "testUser@gmail.com",
+      })
+    );
+    navigate("/msl-reference-list");
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required").matches(/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/, "Invalid email"),
+    email: Yup.string()
+      .required("Email is required")
+      .matches(
+        /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/,
+        "Invalid email"
+      ),
     password: Yup.string().required("Password is required"),
   });
 
@@ -41,7 +49,7 @@ export default function LoginPage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "white"
+          backgroundColor: "white",
         }}
       >
         <Typography component="h1" variant="h3" fontWeight="900">
@@ -79,7 +87,9 @@ export default function LoginPage() {
                 margin="normal"
                 onChange={formik.handleChange}
                 value={formik.values.password}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
                 label="Password"
               />
@@ -92,12 +102,43 @@ export default function LoginPage() {
               >
                 Log In
               </Button>
-              <div style={{display:'flex', justifyContent:'center'}}><FormControlLabel control={<Checkbox />} label="Remember Me" /></div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <FormControlLabel control={<Checkbox />} label="Remember Me" />
+              </div>
             </form>
           )}
         </Formik>
-        <Grid item container justifyContent="center" sx={{ m: 2, fontSize: "1rem" }}>
-          <Link href="#" onClick={() => navigate("/forgot-password")}>Forgot password?</Link>
+        <Grid
+          item
+          container
+          alignItems="center"
+          flexDirection="column"
+          sx={{ m: 1, fontSize: "1rem" }}
+        >
+          <Link
+            href=""
+            onClick={() =>
+              navigate("/forgot-password", { state: { value: "username?" } })
+            }
+          >
+            Forgot username?
+          </Link>
+        </Grid>
+        <Grid
+          item
+          container
+          alignItems="center"
+          flexDirection="column"
+          sx={{ m: 1, fontSize: "1rem" }}
+        >
+          <Link
+           href=""
+            onClick={() =>
+              navigate("/forgot-password", { state: { value: "password?" } })
+            }
+          >
+            Forgot password?
+          </Link>
         </Grid>
         <Grid
           container
@@ -106,11 +147,15 @@ export default function LoginPage() {
           flexDirection="row"
           gap={2}
         >
-          <Grid item flexItem sx={{ width: "40%" }}><Divider /></Grid>
+          <Grid item flexItem sx={{ width: "40%" }}>
+            <Divider />
+          </Grid>
           <Typography component="span" sx={{ fontSize: "1.2rem" }}>
             or
           </Typography>
-          <Grid item flexItem sx={{ width: "40%" }}><Divider /></Grid>
+          <Grid item flexItem sx={{ width: "40%" }}>
+            <Divider />
+          </Grid>
         </Grid>
         <Button
           fullWidth
@@ -121,7 +166,6 @@ export default function LoginPage() {
             color: "#000",
             textTransform: "none",
             fontSize: "1.2rem",
-
           }}
           size="small"
           onClick={() => navigate("/register")}
