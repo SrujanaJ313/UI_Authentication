@@ -57,6 +57,7 @@ export default function Verification() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "white"
           }}
         >
           <Typography component="h1" variant="h3" fontWeight="900">
