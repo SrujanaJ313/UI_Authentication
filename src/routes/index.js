@@ -4,10 +4,11 @@ import ClaimantList from "../pages/claimantList";
 import LoginPage from "../pages/auth/LoginPage"
 import Register from "../pages/auth/Register";
 import Verification from "../pages/auth/Verification";
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import ForgotPwd from "../pages/auth/ForgotPwd";
 import useAuthRouteCheck from "../hooks/useAuthRouteCheck";
+import MainLayout from "../pages/MainLayout";
 
 function PrivateRoute() {
     const token = localStorage.getItem("user");
@@ -23,9 +24,11 @@ function AppRoutes() {
             {showHeader && <Header />}
             <Routes>
                 <Route element={<PrivateRoute />}>
-                    <Route element={<MSLReferenceList />} path="/msl-reference-list" />
+                    {/* <Route element={<MSLReferenceList />} path="/msl-reference-list" /> */}
+                    <Route element={<MainLayout />} path="/msl-reference-list" />
                     <Route element={<ClaimantList />} path="/claimant-list" />
                 </Route>
+                {/* <Route element={<Navigate replace to={isLoggedin ? "/msl-reference-list" : "/login"} />} path="*" /> */}
                 <Route element={<Navigate replace to={isLoggedin ? "/msl-reference-list" : "/login"} />} path="*" />
                 <Route element={<LoginPage />} path="/login" />
                 <Route element={<Register />} path="/register" />
