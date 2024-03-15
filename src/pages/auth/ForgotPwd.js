@@ -76,7 +76,7 @@ export default function ForgotPwd() {
         </Typography>
 
         <Typography sx={{ fontSize: "18px", color: "grey", mt: 4 }}>
-          Enter the email address associated with your account.
+          Enter the email address/Mobile Number associated with your account.
         </Typography>
 
         <TextField
