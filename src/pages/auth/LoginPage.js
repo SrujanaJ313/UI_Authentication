@@ -11,19 +11,35 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { useState } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const user =
+    localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
+  const [remember, setRemember] = useState(user?.remember || false);
+  // console.log('remember::::', remember)
   const handleSubmit = (values) => {
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        userId: "123",
-        userName: "Test User",
-        email: "testUser@gmail.com",
-      })
-    );
-    navigate("/msl-reference-list");
+    if (remember) {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email: values.email,
+          password: values.password,
+          remember
+        })
+      );
+    } else {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          userId: "123",
+          userName: "Test User",
+          userEmail: "testUser@gmail.com",
+        })
+      );
+    }
+    navigate("/msl-reference-list", { state: { remember } });
   };
 
   const validationSchema = Yup.object().shape({
@@ -56,7 +72,11 @@ export default function LoginPage() {
           NHUIS
         </Typography>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{
+            email: user?.email || "",
+            password: user?.password || "",
+            remember
+          }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -103,7 +123,12 @@ export default function LoginPage() {
                 Log In
               </Button>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <FormControlLabel control={<Checkbox />} label="Remember Me" />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Remember Me"
+                  checked={remember}
+                  onClick={() => setRemember(!remember)}
+                />
               </div>
             </form>
           )}
@@ -132,7 +157,7 @@ export default function LoginPage() {
           sx={{ m: 1, fontSize: "1rem" }}
         >
           <Link
-           href=""
+            href=""
             onClick={() =>
               navigate("/forgot-password", { state: { value: "password?" } })
             }

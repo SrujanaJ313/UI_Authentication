@@ -4,7 +4,7 @@ import { Box, IconButton, Toolbar, Typography, styled } from "@mui/material";
 
 import { AccountCircle } from "@mui/icons-material";
 import Notifications from "../Notifications";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, MenuItem } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -28,6 +28,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
     const handleOpenMenu = (event) => {
       setAnchorEl(event.currentTarget);
@@ -39,7 +40,9 @@ const Header = () => {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    localStorage.removeItem("user");
+    if(!location?.state?.remember){
+      localStorage.removeItem("user");
+    }
     navigate("/login");
   };
 
