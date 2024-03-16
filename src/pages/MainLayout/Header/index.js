@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MuiAppBar from "@mui/material/AppBar";
 import { Box, IconButton, Toolbar, Typography, styled } from "@mui/material";
 
 import { AccountCircle } from "@mui/icons-material";
 import Notifications from "../Notifications";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, MenuItem } from '@mui/material';
-import { toast, ToastContainer } from 'react-toastify';
+import { Menu, MenuItem } from "@mui/material";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -30,8 +29,8 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-    const handleOpenMenu = (event) => {
-      setAnchorEl(event.currentTarget);
+  const handleOpenMenu = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleCloseMenu = () => {
@@ -40,15 +39,12 @@ const Header = () => {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    if(!location?.state?.remember){
+    if (!location?.state?.remember) {
       localStorage.removeItem("user");
     }
     navigate("/login");
   };
 
-  useEffect(() => {
-    toast("Logged in Successfully!");
-  },[])
   return (
     <>
       <AppBar position="absolute">
@@ -87,6 +83,7 @@ const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -104,10 +101,8 @@ const Header = () => {
         <MenuItem onClick={handleCloseMenu}>Settings</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
-      <ToastContainer />
     </>
   );
-}
-
+};
 
 export default Header;

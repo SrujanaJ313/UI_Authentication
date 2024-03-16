@@ -7,7 +7,7 @@ import Verification from "../pages/auth/Verification";
 // import { useEffect, useState } from 'react';
 // import Header from '../components/Header';
 import ForgotPwd from "../pages/auth/ForgotPwd";
-import useAuthRouteCheck from "../hooks/useAuthRouteCheck";
+// import useAuthRouteCheck from "../hooks/useAuthRouteCheck";
 import MainLayout from "../pages/MainLayout";
 
 function PrivateRoute() {
@@ -19,7 +19,7 @@ function AppRoutes() {
     // const isAuthRoute = useAuthRouteCheck();
     // const showHeader = !isAuthRoute
     const isLoggedin = Object.keys(localStorage.getItem("user") || {}).length;
-    console.log('isLoggedin:::', isLoggedin);
+
     return (
         <>
             {/* {showHeader && <Header />} */}

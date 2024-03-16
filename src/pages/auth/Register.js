@@ -2,7 +2,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -12,16 +12,25 @@ import {
   FormControl,
   FormHelperText,
   Grid,
-  InputLabel,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { validatePassword } from "../../utils/common";
 import { toast, ToastContainer } from "react-toastify";
+import { Captcha } from "../../components/captcha";
+import { useState } from "react";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
   const navigate = useNavigate();
+  const [captcha, setCaptcha] = useState(() => Math.random().toString(36).slice(8));
+
+  const getCaptcha = (captchaValue) => {
+    setCaptcha(captchaValue)
+  }
+
+
   const handleSubmit = (values) => {
-    console.log(values);
+    // console.log(values);
     toast("Registered Successfully!");
     setTimeout(() => {
       navigate("/login");
@@ -54,6 +63,7 @@ export default function Register() {
       .required("Mobile Number is required")
       .matches(/^[0-9]{10}$/, "Invalid Mobile Number"),
     dateOfBirth: Yup.string().required("Date of Birth is required"),
+    captcha: Yup.string().required("please enter captcha").matches(captcha)
   });
 
   return (
@@ -86,6 +96,7 @@ export default function Register() {
               lastName: "",
               email: "",
               dateOfBirth: null,
+              captcha:""
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -121,24 +132,23 @@ export default function Register() {
                   // helperText={formik.touched.password && formik.errors.password}
                   label="Password"
                 />
-                {formik.touched.password &&
-                  formik.errors.password && (
-                    <div>
-                      {validatePassword(formik.values.password).map((err) => (
-                        <div
-                          style={{ fontSize: 12, color: err.errorCode }}
-                          key={err.description}
-                        >
-                          {err.errorCode === "red" ? (
-                            <span>&#10008;</span>
-                          ) : (
-                            <span>&#10004;</span>
-                          )}
-                          {err.description}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                {formik.touched.password && formik.errors.password && (
+                  <div>
+                    {validatePassword(formik.values.password).map((err) => (
+                      <div
+                        style={{ fontSize: 12, color: err.errorCode }}
+                        key={err.description}
+                      >
+                        {err.errorCode === "red" ? (
+                          <span>&#10008;</span>
+                        ) : (
+                          <span>&#10004;</span>
+                        )}
+                        {err.description}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 <TextField
                   size="small"
@@ -232,13 +242,8 @@ export default function Register() {
                   margin="normal"
                   onChange={formik.handleChange}
                   value={formik.values.mobileNumber}
-                  error={
-                    formik.touched.mobileNumber &&
-                    Boolean(formik.errors.mobileNumber)
-                  }
-                  helperText={
-                    formik.touched.mobileNumber && formik.errors.mobileNumber
-                  }
+                  error={formik.touched.mobileNumber && Boolean(formik.errors.mobileNumber)}
+                  helperText={formik.touched.mobileNumber && formik.errors.mobileNumber }
                   label="Mobile Number"
                 />
 
@@ -277,6 +282,7 @@ export default function Register() {
                       )}
                   </FormControl>
                 </LocalizationProvider>
+                <Captcha formik={formik} captcha={captcha} getCaptcha={getCaptcha} />
                 <Button
                   size="small"
                   type="submit"

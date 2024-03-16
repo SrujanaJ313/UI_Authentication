@@ -27,7 +27,7 @@ export default function Verification() {
       setError("Invalid OTP");
       return;
     }
-    toast("Verified Successfully!");
+        toast("Verified Successfully!");
     setTimeout(() => {
       navigate("/login");
     }, 2 * 1000);
@@ -66,7 +66,7 @@ export default function Verification() {
           <Typography style={{ margin: "20px", fontSize: "1.6rem" }}>
             Two-Step Verification
           </Typography>
-          <img src={OTPicon} />
+          <img src={OTPicon} alt="" />
           <Typography
             textAlign="center"
             fontSize="1.4rem"

@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CaseDataTable from "../CaseDataTable";
 import CaseBarChart from "../CaseBarChart";
 import CaseGuageChart from "../CaseGuageChart";
 import { Grid, Paper, Typography } from "@mui/material";
 import CaseStatusCard from "../CaseStatusCard";
 import CaseAlerts from "../CaseAlerts";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const DashboardLayout = () => {
+  useEffect(() => {
+    toast("Logged in Successfully!");
+  }, []);
+
   return (
+    <>
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Typography variant="h5" className="py-3">
@@ -26,7 +33,7 @@ const DashboardLayout = () => {
           </Grid>
           <Grid item xs={6} className="h-full">
             <Paper className="h-full">
-            <Typography variant="h6" className="p-2">
+              <Typography variant="h6" className="p-2">
                 Alerts & Remainders
               </Typography>
               <CaseAlerts></CaseAlerts>
@@ -46,7 +53,7 @@ const DashboardLayout = () => {
           </Grid>
           <Grid item xs={6}>
             <Paper className="h-full p-2">
-            <Typography variant="h6" className="pb-2">
+              <Typography variant="h6" className="pb-2">
                 Employee Status
               </Typography>
               <CaseBarChart></CaseBarChart>
@@ -55,6 +62,8 @@ const DashboardLayout = () => {
         </Grid>
       </Grid>
     </Grid>
+    <ToastContainer />
+    </>
   );
 };
 

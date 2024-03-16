@@ -5,28 +5,35 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Divider, FormGroup } from "@mui/material";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Divider } from "@mui/material";
+import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
+import { Captcha } from "../../components/captcha";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const user =
     localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
   const [remember, setRemember] = useState(user?.remember || false);
-  // console.log('remember::::', remember)
+  const [captcha, setCaptcha] = useState(() => Math.random().toString(36).slice(8));
+
+  const getCaptcha = (captchaValue) => {
+    setCaptcha(captchaValue)
+  }
+
   const handleSubmit = (values) => {
+    // console.log('values:::', values);
     if (remember) {
       localStorage.setItem(
         "user",
         JSON.stringify({
           email: values.email,
           password: values.password,
-          remember
+          remember,
         })
       );
     } else {
@@ -50,6 +57,7 @@ export default function LoginPage() {
         "Invalid email"
       ),
     password: Yup.string().required("Password is required"),
+    captcha: Yup.string().required("please enter captcha").matches(captcha)
   });
 
   return (
@@ -75,63 +83,73 @@ export default function LoginPage() {
           initialValues={{
             email: user?.email || "",
             password: user?.password || "",
-            remember
+            remember,
+            captcha: "",
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {(formik) => (
-            <form onSubmit={formik.handleSubmit}>
-              <Field
-                as={TextField}
-                name="email"
-                size="small"
-                placeholder="Email Address"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-                label="Email Address"
-              />
-              <Field
-                as={TextField}
-                name="password"
-                placeholder="Password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                size="small"
-                margin="normal"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-                label="Password"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                size="small"
-                variant="contained"
-                sx={{ mt: 3, mb: 2, textTransform: "none", fontSize: "1.2rem" }}
-              >
-                Log In
-              </Button>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Remember Me"
-                  checked={remember}
-                  onClick={() => setRemember(!remember)}
+          {(formik) => {
+            // console.log('formik errors:::', formik.errors);
+            return (
+              <form onSubmit={formik.handleSubmit}>
+                <Field
+                  as={TextField}
+                  name="email"
+                  size="small"
+                  placeholder="Email Address"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  label="Email Address"
                 />
-              </div>
-            </form>
-          )}
+                <Field
+                  as={TextField}
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  margin="normal"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
+                  label="Password"
+                />
+                <Captcha formik={formik} captcha={captcha} getCaptcha={getCaptcha} />
+                <Button
+                  type="submit"
+                  fullWidth
+                  size="small"
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    textTransform: "none",
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  Log In
+                </Button>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Remember Me"
+                    checked={remember}
+                    onClick={() => setRemember(!remember)}
+                  />
+                </div>
+              </form>
+            );
+          }}
         </Formik>
         <Grid
           item
