@@ -26,7 +26,6 @@ export default function LoginPage() {
   }
 
   const handleSubmit = (values) => {
-    // console.log('values:::', values);
     if (remember) {
       localStorage.setItem(
         "user",
@@ -90,7 +89,6 @@ export default function LoginPage() {
           onSubmit={handleSubmit}
         >
           {(formik) => {
-            // console.log('formik errors:::', formik.errors);
             return (
               <form onSubmit={formik.handleSubmit}>
                 <Field

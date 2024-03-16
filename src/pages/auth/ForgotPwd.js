@@ -7,52 +7,37 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Divider } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Field, Formik } from "formik";
+import * as Yup from "yup";
+import { Captcha } from "../../components/captcha";
 
 export default function ForgotPwd() {
   const navigate = useNavigate();
-  const [emailOrMobile, setEmailOrMobile] = useState("");
-  const [error, setError] = useState("");
   const location = useLocation();
+  const [captcha, setCaptcha] = useState(() =>
+    Math.random().toString(36).slice(8)
+  );
+  const getCaptcha = (captchaValue) => {
+    setCaptcha(captchaValue);
+  };
 
-  const handleSubmit = () => {
-    if (!emailOrMobile) {
-      setError("Email/Mobile Number is required");
-      return;
-    } else if (error) {
-      // else if (!isValidEmail(emailOrMobile) && !isValidMobile(emailOrMobile)) {
-      setError("Invalid email/mobile number");
-    }
-    else {
+  const handleSubmit = (values) => {
     navigate("/verification", {
       state: {
-        email: emailOrMobile,
+        email: values.emailOrMobile,
       },
     });
-
-  };
-  }
-  const onChangeHandler = (event) => {
-    const {
-      target: { value },
-    } = event;
-    if (!isValidEmail(value) && !isValidMobile(value)) {
-      setError("Invalid email/mobile number");
-    } else {
-      setError("");
-    }
-    setEmailOrMobile(value);
   };
 
-  const isValidEmail = (value) => {
-    return /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/.test(
-      value
-    );
-  };
-
-  const isValidMobile = (value) => {
-    return /^[0-9]{10}$/.test(value);
-  };
-
+  const validationSchema = Yup.object().shape({
+    emailOrMobile: Yup.string()
+      .required("Email/Mobile Number is required")
+      .matches(
+        /^(?:[a-zA-Z0-9._-]+@(?:affiliate\.nhes\.nh\.gov))|(?:\d{10})$/,
+        "Invalid email/mobile number"
+      ),
+    captcha: Yup.string().required("please enter captcha").matches(captcha),
+  });
   return (
     <Container component="main" maxWidth="sm">
       <Box
@@ -66,7 +51,7 @@ export default function ForgotPwd() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "white"
+          backgroundColor: "white",
         }}
       >
         <Typography component="h1" variant="h3" fontWeight="900" sx={{ m: 2 }}>
@@ -76,34 +61,64 @@ export default function ForgotPwd() {
           Forgot {location?.state?.value}
         </Typography>
 
-        <Typography sx={{ fontSize: "18px", color: "grey", mt: 4 }}>
-          Enter the email address/Mobile Number associated with your account.
-        </Typography>
-
-        <TextField
-          size="small"
-          name="emailOrMobile"
-          placeholder="Enter Email or Mobile Number"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={emailOrMobile}
-          onChange={onChangeHandler}
-          error={Boolean(error)}
-          helperText={error}
-          sx={{ width: "100%", mt: 2 }}
-        />
-
-        <Button
-          size="small"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2, textTransform: "none", fontSize: "1.2rem" }}
-          onClick={handleSubmit}
+        <Formik
+          initialValues={{
+            emailOrMobile: "",
+            captcha: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
-          Continue
-        </Button>
-
+          {(formik) => {
+            return (
+              <form onSubmit={formik.handleSubmit}>
+                <Typography sx={{ fontSize: "18px", color: "grey", mt: 4 }}>
+                  Enter the Email address/Mobile Number associated with your
+                  account.
+                </Typography>
+                <Field
+                  as={TextField}
+                  size="small"
+                  name="emailOrMobile"
+                  placeholder="Enter Email or Mobile Number"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={formik.handleChange}
+                  value={formik.values.emailOrMobile}
+                  error={
+                    formik.touched.emailOrMobile &&
+                    Boolean(formik.errors.emailOrMobile)
+                  }
+                  helperText={
+                    formik.touched.emailOrMobile && formik.errors.emailOrMobile
+                  }
+                  label="Email/Mobile Number"
+                  sx={{ width: "100%", mt: 2 }}
+                />
+                <Captcha
+                  formik={formik}
+                  captcha={captcha}
+                  getCaptcha={getCaptcha}
+                />
+                <Button
+                  type="submit"
+                  size="small"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    textTransform: "none",
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  Continue
+                </Button>
+              </form>
+            );
+          }}
+        </Formik>
         <Grid
           container
           alignItems="center"
