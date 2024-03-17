@@ -18,17 +18,17 @@ import { validatePassword } from "../../utils/common";
 import { toast, ToastContainer } from "react-toastify";
 import { Captcha } from "../../components/captcha";
 import { useState } from "react";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [captcha, setCaptcha] = useState(() => Math.random().toString(36).slice(8));
+  const [captcha, setCaptcha] = useState(() =>
+    Math.random().toString(36).slice(8)
+  );
 
   const getCaptcha = (captchaValue) => {
-    setCaptcha(captchaValue)
-  }
-
-
+    setCaptcha(captchaValue);
+  };
   const handleSubmit = (values) => {
     // console.log(values);
     toast("Registered Successfully!");
@@ -59,11 +59,9 @@ export default function Register() {
         /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/,
         "Invalid email"
       ),
-    mobileNumber: Yup.string()
-      .required("Mobile Number is required")
-      .matches(/^[0-9]{10}$/, "Invalid Mobile Number"),
+    mobileNumber: Yup.string().required("Mobile Number is required").matches(/^[0-9]{10}$/, "Invalid Mobile Number"),
     dateOfBirth: Yup.string().required("Date of Birth is required"),
-    captcha: Yup.string().required("please enter captcha").matches(captcha)
+    captcha: Yup.string().required("please enter captcha").matches(captcha),
   });
 
   return (
@@ -95,210 +93,215 @@ export default function Register() {
               middleName: "",
               lastName: "",
               email: "",
+              mobileNumber:"",
               dateOfBirth: null,
-              captcha:""
+              captcha: "",
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {(formik) => (
-              <form onSubmit={formik.handleSubmit}>
-                <TextField
-                  size="small"
-                  name="userID"
-                  placeholder="User ID"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.userID}
-                  error={formik.touched.userID && Boolean(formik.errors.userID)}
-                  helperText={formik.touched.userID && formik.errors.userID}
-                  label="User ID"
-                />
-                <TextField
-                  size="small"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  // error={
-                  //   formik.touched.password && Boolean(formik.errors.password)
-                  // }
-                  // helperText={formik.touched.password && formik.errors.password}
-                  label="Password"
-                />
-                {formik.touched.password && formik.errors.password && (
-                  <div>
-                    {validatePassword(formik.values.password).map((err) => (
-                      <div
-                        style={{ fontSize: 12, color: err.errorCode }}
-                        key={err.description}
-                      >
-                        {err.errorCode === "red" ? (
-                          <span>&#10008;</span>
-                        ) : (
-                          <span>&#10004;</span>
-                        )}
-                        {err.description}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <TextField
-                  size="small"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.confirmPassword}
-                  error={
-                    formik.touched.confirmPassword &&
-                    Boolean(formik.errors.confirmPassword)
-                  }
-                  helperText={
-                    formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword
-                  }
-                  label="Confirm Password"
-                />
-                <TextField
-                  size="small"
-                  name="firstName"
-                  placeholder="First Name"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.firstName}
-                  error={
-                    formik.touched.firstName && Boolean(formik.errors.firstName)
-                  }
-                  helperText={
-                    formik.touched.firstName && formik.errors.firstName
-                  }
-                  label="First Name"
-                />
-                <TextField
-                  size="small"
-                  name="middleName"
-                  placeholder="Middle Name"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.middleName}
-                  error={
-                    formik.touched.middleName &&
-                    Boolean(formik.errors.middleName)
-                  }
-                  helperText={
-                    formik.touched.middleName && formik.errors.middleName
-                  }
-                  label="Middle Name"
-                />
-                <TextField
-                  size="small"
-                  name="lastName"
-                  placeholder="Last Name"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.lastName}
-                  error={
-                    formik.touched.lastName && Boolean(formik.errors.lastName)
-                  }
-                  helperText={formik.touched.lastName && formik.errors.lastName}
-                  label="Last Name"
-                />
-                <TextField
-                  size="small"
-                  name="email"
-                  placeholder="Email"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.email}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  label="Email"
-                />
-                <TextField
-                  size="small"
-                  name="mobileNumber"
-                  placeholder="Mobile Number"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={formik.handleChange}
-                  value={formik.values.mobileNumber}
-                  error={formik.touched.mobileNumber && Boolean(formik.errors.mobileNumber)}
-                  helperText={formik.touched.mobileNumber && formik.errors.mobileNumber }
-                  label="Mobile Number"
-                />
-
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <FormControl
-                    fullWidth
-                    error={
-                      formik.touched.dateOfBirth &&
-                      Boolean(formik.errors.dateOfBirth)
-                    }
+            {(formik) => {
+              return (
+                <form onSubmit={formik.handleSubmit}>
+                  <TextField
+                    size="small"
+                    name="userID"
+                    placeholder="User ID"
                     variant="outlined"
+                    fullWidth
                     margin="normal"
-                  >
-                    <DatePicker
-                      name="dateOfBirth"
-                      label="Date of Birth"
-                      value={formik.values.dateOfBirth}
-                      placeholder="Date of Birth"
-                      onChange={(value) =>
-                        formik.setFieldValue("dateOfBirth", value)
+                    onChange={formik.handleChange}
+                    value={formik.values.userID}
+                    error={formik.touched.userID && Boolean(formik.errors.userID)}
+                    helperText={formik.touched.userID && formik.errors.userID}
+                    label="User ID"
+                  />
+                  <TextField
+                    size="small"
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    // error={
+                      //   formik.touched.password && Boolean(formik.errors.password)
+                    // }
+                  // helperText={formik.touched.password && formik.errors.password}
+                    label="Password"
+                  />
+                  {formik.touched.password && formik.errors.password && (
+                    <div>
+                      {validatePassword(formik.values.password).map((err) => (
+                        <div
+                          style={{ fontSize: 12, color: err.errorCode }}
+                          key={err.description}
+                        >
+                          {err.errorCode === "red" ? (
+                            <span>&#10008;</span>
+                          ) : (
+                            <span>&#10004;</span>
+                          )}
+                          {err.description}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <TextField
+                    size="small"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    type="password"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={formik.handleChange}
+                    value={formik.values.confirmPassword}
+                    error={
+                      formik.touched.confirmPassword &&
+                      Boolean(formik.errors.confirmPassword)
+                    }
+                    helperText={
+                      formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword
+                    }
+                    label="Confirm Password"
+                  />
+                  <TextField
+                    size="small"
+                    name="firstName"
+                    placeholder="First Name"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={formik.handleChange}
+                    value={formik.values.firstName}
+                    error={
+                      formik.touched.firstName && Boolean(formik.errors.firstName)
+                    }
+                    helperText={
+                      formik.touched.firstName && formik.errors.firstName
+                    }
+                    label="First Name"
+                  />
+                  <TextField
+                    size="small"
+                    name="middleName"
+                    placeholder="Middle Name"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={formik.handleChange}
+                    value={formik.values.middleName}
+                    error={
+                      formik.touched.middleName &&
+                      Boolean(formik.errors.middleName)
+                    }
+                    helperText={
+                      formik.touched.middleName && formik.errors.middleName
+                    }
+                    label="Middle Name"
+                  />
+                  <TextField
+                    size="small"
+                    name="lastName"
+                    placeholder="Last Name"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={formik.handleChange}
+                    value={formik.values.lastName}
+                    error={
+                      formik.touched.lastName && Boolean(formik.errors.lastName)
+                    }
+                    helperText={
+                      formik.touched.lastName && formik.errors.lastName
+                    }
+                    label="Last Name"
+                  />
+                  <TextField
+                    size="small"
+                    name="email"
+                    placeholder="Email"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                    label="Email"
+                  />
+                  <TextField
+                    size="small"
+                    name="mobileNumber"
+                    placeholder="Mobile Number"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    onChange={formik.handleChange}
+                    value={formik.values.mobileNumber}
+                    error={formik.touched.mobileNumber && Boolean(formik.errors.mobileNumber)}
+                    helperText={formik.touched.mobileNumber && formik.errors.mobileNumber }
+                    label="Mobile Number"
+                  />
+
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <FormControl
+                      fullWidth
+                      error={
+                        formik.touched.dateOfBirth &&
+                        Boolean(formik.errors.dateOfBirth)
                       }
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          fullWidth
-                          size="small"
-                        />
-                      )}
-                    />
-                    {formik.touched.dateOfBirth &&
-                      formik.errors.dateOfBirth && (
-                        <FormHelperText>
-                          {formik.errors.dateOfBirth}
-                        </FormHelperText>
-                      )}
-                  </FormControl>
-                </LocalizationProvider>
-                <Captcha formik={formik} captcha={captcha} getCaptcha={getCaptcha} />
-                <Button
-                  size="small"
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    mt: 3,
-                    mb: 2,
-                    textTransform: "none",
-                    fontSize: "1.2rem",
-                  }}
-                >
-                  Register
-                </Button>
-              </form>
-            )}
+                      variant="outlined"
+                      margin="normal"
+                    >
+                      <DatePicker
+                        name="dateOfBirth"
+                        label="Date of Birth"
+                        value={formik.values.dateOfBirth}
+                        placeholder="Date of Birth"
+                        onChange={(value) =>
+                          formik.setFieldValue("dateOfBirth", value)
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                          />
+                        )}
+                      />
+                      {formik.touched.dateOfBirth &&
+                        formik.errors.dateOfBirth && (
+                          <FormHelperText>
+                            {formik.errors.dateOfBirth}
+                          </FormHelperText>
+                        )}
+                    </FormControl>
+                  </LocalizationProvider>
+                  <Captcha formik={formik} captcha={captcha} getCaptcha={getCaptcha} />
+                  <Button
+                    size="small"
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      mt: 3,
+                      mb: 2,
+                      textTransform: "none",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    Register
+                  </Button>
+                </form>
+              );
+            }}
           </Formik>
 
           <Grid
