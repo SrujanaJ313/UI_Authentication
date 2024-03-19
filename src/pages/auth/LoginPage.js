@@ -13,17 +13,22 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
 import { Captcha } from "../../components/captcha";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import InputAdornment from "@mui/material/InputAdornment";
+import LockIcon from '@mui/icons-material/Lock';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const user =
     localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
   const [remember, setRemember] = useState(user?.remember || false);
-  const [captcha, setCaptcha] = useState(() => Math.random().toString(36).slice(8));
+  const [captcha, setCaptcha] = useState(() =>
+    Math.random().toString(36).slice(8)
+  );
 
   const getCaptcha = (captchaValue) => {
-    setCaptcha(captchaValue)
-  }
+    setCaptcha(captchaValue);
+  };
 
   const handleSubmit = (values) => {
     if (remember) {
@@ -56,7 +61,7 @@ export default function LoginPage() {
         "Invalid email"
       ),
     password: Yup.string().required("Password is required"),
-    captcha: Yup.string().required("please enter captcha").matches(captcha)
+    captcha: Yup.string().required("please enter captcha").matches(captcha),
   });
 
   return (
@@ -104,6 +109,14 @@ export default function LoginPage() {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   label="Email Address"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircleIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  color="secondary"
                 />
                 <Field
                   as={TextField}
@@ -121,8 +134,19 @@ export default function LoginPage() {
                   }
                   helperText={formik.touched.password && formik.errors.password}
                   label="Password"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
-                <Captcha formik={formik} captcha={captcha} getCaptcha={getCaptcha} />
+                <Captcha
+                  formik={formik}
+                  captcha={captcha}
+                  getCaptcha={getCaptcha}
+                />
                 <Button
                   type="submit"
                   fullWidth
