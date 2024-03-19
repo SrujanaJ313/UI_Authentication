@@ -15,7 +15,7 @@ import { useState } from "react";
 import { Captcha } from "../../components/captcha";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import InputAdornment from "@mui/material/InputAdornment";
-import LockIcon from '@mui/icons-material/Lock';
+import LockIcon from "@mui/icons-material/Lock";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function LoginPage() {
       localStorage.setItem(
         "user",
         JSON.stringify({
-          email: values.email,
+          userID: values.userID,
           password: values.password,
           remember,
         })
@@ -44,7 +44,7 @@ export default function LoginPage() {
       localStorage.setItem(
         "user",
         JSON.stringify({
-          userId: "123",
+          userIdentity: "123",
           userName: "Test User",
           userEmail: "testUser@gmail.com",
         })
@@ -54,12 +54,7 @@ export default function LoginPage() {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .required("Email is required")
-      .matches(
-        /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/,
-        "Invalid email"
-      ),
+    userID: Yup.string().required("UserID is required"),
     password: Yup.string().required("Password is required"),
     captcha: Yup.string().required("please enter captcha").matches(captcha),
   });
@@ -85,7 +80,7 @@ export default function LoginPage() {
         </Typography>
         <Formik
           initialValues={{
-            email: user?.email || "",
+            userID: user?.userID || "",
             password: user?.password || "",
             remember,
             captcha: "",
@@ -96,19 +91,18 @@ export default function LoginPage() {
           {(formik) => {
             return (
               <form onSubmit={formik.handleSubmit}>
-                <Field
-                  as={TextField}
-                  name="email"
+                <TextField
                   size="small"
-                  placeholder="Email Address"
+                  name="userID"
+                  placeholder="User ID"
                   variant="outlined"
                   fullWidth
                   margin="normal"
                   onChange={formik.handleChange}
-                  value={formik.values.email}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  label="Email Address"
+                  value={formik.values.userID}
+                  error={formik.touched.userID && Boolean(formik.errors.userID)}
+                  helperText={formik.touched.userID && formik.errors.userID}
+                  label="User ID"
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -156,7 +150,7 @@ export default function LoginPage() {
                     mb: 2,
                     textTransform: "none",
                     fontSize: "1.2rem",
-                    borderRadius:"30px",
+                    borderRadius: "30px",
                   }}
                 >
                   Log In
@@ -228,7 +222,7 @@ export default function LoginPage() {
             mt: 3,
             mb: 2,
             border: "1px solid #dee2e6",
-            borderRadius:"30px",
+            borderRadius: "30px",
             color: "#000",
             textTransform: "none",
             fontSize: "1.2rem",
