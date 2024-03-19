@@ -31,7 +31,7 @@ export default function Verification() {
     }
     toast("Verified Successfully!");
     setTimeout(() => {
-      navigate("/login");
+      navigate("/reset-password");
     }, 2 * 1000);
   };
 

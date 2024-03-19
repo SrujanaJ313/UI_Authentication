@@ -9,6 +9,7 @@ import Verification from "../pages/auth/Verification";
 import ForgotPwd from "../pages/auth/ForgotPwd";
 // import useAuthRouteCheck from "../hooks/useAuthRouteCheck";
 import MainLayout from "../pages/MainLayout";
+import CreatePassword from "../pages/auth/CreatePassword";
 
 function PrivateRoute() {
     const token = localStorage.getItem("user");
@@ -34,6 +35,7 @@ function AppRoutes() {
                 <Route element={<Register />} path="/register" />
                 <Route element={<Verification />} path="/verification" />
                 <Route element={<ForgotPwd />} path="/forgot-password" />
+                <Route element={<CreatePassword />} path="/reset-password" />
             </Routes>
         </>
     )
