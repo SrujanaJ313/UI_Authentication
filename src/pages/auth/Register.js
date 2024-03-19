@@ -19,6 +19,12 @@ import { toast, ToastContainer } from "react-toastify";
 import { Captcha } from "../../components/captcha";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import InputAdornment from "@mui/material/InputAdornment";
+import LockIcon from "@mui/icons-material/Lock";
+import MailIcon from "@mui/icons-material/Mail";
+import SmartphoneIcon from "@mui/icons-material/Smartphone";
+import BadgeIcon from "@mui/icons-material/Badge";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -51,7 +57,7 @@ export default function Register() {
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
     firstName: Yup.string().required("First Name is required"),
-    middleName: Yup.string().required("Middle Initial is required"),
+    middleInitial: Yup.string().required("Middle Initial is required"),
     lastName: Yup.string().required("Last Name is required"),
     email: Yup.string()
       .required("Email is required")
@@ -59,7 +65,9 @@ export default function Register() {
         /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@affiliate\.nhes\.nh\.gov$/,
         "Invalid email"
       ),
-    mobileNumber: Yup.string().required("Mobile Number is required").matches(/^[0-9]{10}$/, "Invalid Mobile Number"),
+    mobileNumber: Yup.string()
+      .required("Mobile Number is required")
+      .matches(/^[0-9]{10}$/, "Invalid Mobile Number"),
     dateOfBirth: Yup.string().required("Date of Birth is required"),
     captcha: Yup.string().required("please enter captcha").matches(captcha),
   });
@@ -90,10 +98,10 @@ export default function Register() {
               password: "",
               confirmPassword: "",
               firstName: "",
-              middleName: "",
+              middleInitial: "",
               lastName: "",
               email: "",
-              mobileNumber:"",
+              mobileNumber: "",
               dateOfBirth: null,
               captcha: "",
             }}
@@ -112,9 +120,18 @@ export default function Register() {
                     margin="normal"
                     onChange={formik.handleChange}
                     value={formik.values.userID}
-                    error={formik.touched.userID && Boolean(formik.errors.userID)}
+                    error={
+                      formik.touched.userID && Boolean(formik.errors.userID)
+                    }
                     helperText={formik.touched.userID && formik.errors.userID}
                     label="User ID"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <AccountCircleIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <TextField
                     size="small"
@@ -127,10 +144,17 @@ export default function Register() {
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     // error={
-                      //   formik.touched.password && Boolean(formik.errors.password)
+                    //   formik.touched.password && Boolean(formik.errors.password)
                     // }
-                  // helperText={formik.touched.password && formik.errors.password}
+                    // helperText={formik.touched.password && formik.errors.password}
                     label="Password"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   {formik.touched.password && formik.errors.password && (
                     <div>
@@ -169,6 +193,13 @@ export default function Register() {
                       formik.errors.confirmPassword
                     }
                     label="Confirm Password"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <TextField
                     size="small"
@@ -180,30 +211,45 @@ export default function Register() {
                     onChange={formik.handleChange}
                     value={formik.values.firstName}
                     error={
-                      formik.touched.firstName && Boolean(formik.errors.firstName)
+                      formik.touched.firstName &&
+                      Boolean(formik.errors.firstName)
                     }
                     helperText={
                       formik.touched.firstName && formik.errors.firstName
                     }
                     label="First Name"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <BadgeIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <TextField
                     size="small"
-                    name="middleName"
-                    placeholder="Middle Name"
+                    name="middleInitial"
+                    placeholder="Middle Intital"
                     variant="outlined"
                     fullWidth
                     margin="normal"
                     onChange={formik.handleChange}
-                    value={formik.values.middleName}
+                    value={formik.values.middleInitial}
                     error={
-                      formik.touched.middleName &&
-                      Boolean(formik.errors.middleName)
+                      formik.touched.middleInitial &&
+                      Boolean(formik.errors.middleInitial)
                     }
                     helperText={
-                      formik.touched.middleName && formik.errors.middleName
+                      formik.touched.middleInitial && formik.errors.middleInitial
                     }
-                    label="Middle Name"
+                    label="Middle Initial"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <BadgeIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <TextField
                     size="small"
@@ -221,6 +267,13 @@ export default function Register() {
                       formik.touched.lastName && formik.errors.lastName
                     }
                     label="Last Name"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <BadgeIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <TextField
                     size="small"
@@ -234,6 +287,13 @@ export default function Register() {
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
                     label="Email"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <MailIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <TextField
                     size="small"
@@ -244,9 +304,21 @@ export default function Register() {
                     margin="normal"
                     onChange={formik.handleChange}
                     value={formik.values.mobileNumber}
-                    error={formik.touched.mobileNumber && Boolean(formik.errors.mobileNumber)}
-                    helperText={formik.touched.mobileNumber && formik.errors.mobileNumber }
+                    error={
+                      formik.touched.mobileNumber &&
+                      Boolean(formik.errors.mobileNumber)
+                    }
+                    helperText={
+                      formik.touched.mobileNumber && formik.errors.mobileNumber
+                    }
                     label="Mobile Number"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SmartphoneIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
 
                   <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -284,7 +356,11 @@ export default function Register() {
                         )}
                     </FormControl>
                   </LocalizationProvider>
-                  <Captcha formik={formik} captcha={captcha} getCaptcha={getCaptcha} />
+                  <Captcha
+                    formik={formik}
+                    captcha={captcha}
+                    getCaptcha={getCaptcha}
+                  />
                   <Button
                     size="small"
                     type="submit"
@@ -295,6 +371,7 @@ export default function Register() {
                       mb: 2,
                       textTransform: "none",
                       fontSize: "1.2rem",
+                      borderRadius:"30px",
                     }}
                   >
                     Register
@@ -327,6 +404,7 @@ export default function Register() {
               mt: 3,
               mb: 2,
               border: "1px solid #dee2e6",
+              borderRadius:"30px",
               color: "#000",
               textTransform: "none",
               fontSize: "1.2rem",

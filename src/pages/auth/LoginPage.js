@@ -116,7 +116,6 @@ export default function LoginPage() {
                       </InputAdornment>
                     ),
                   }}
-                  color="secondary"
                 />
                 <Field
                   as={TextField}
@@ -157,6 +156,7 @@ export default function LoginPage() {
                     mb: 2,
                     textTransform: "none",
                     fontSize: "1.2rem",
+                    borderRadius:"30px",
                   }}
                 >
                   Log In
@@ -228,6 +228,7 @@ export default function LoginPage() {
             mt: 3,
             mb: 2,
             border: "1px solid #dee2e6",
+            borderRadius:"30px",
             color: "#000",
             textTransform: "none",
             fontSize: "1.2rem",

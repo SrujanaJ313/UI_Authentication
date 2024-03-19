@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import OTPicon from "../../../src/assets/images/otp-icon.png";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 export default function Verification() {
   const location = useLocation();
@@ -17,7 +18,8 @@ export default function Verification() {
     otpValue3: "",
     otpValue4: "",
   };
-  const [{ otpValue1, otpValue2, otpValue3, otpValue4 }, setOtpValue] = useState(initialOtpValues);
+  const [{ otpValue1, otpValue2, otpValue3, otpValue4 }, setOtpValue] =
+    useState(initialOtpValues);
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
@@ -27,7 +29,7 @@ export default function Verification() {
       setError("Invalid OTP");
       return;
     }
-        toast("Verified Successfully!");
+    toast("Verified Successfully!");
     setTimeout(() => {
       navigate("/login");
     }, 2 * 1000);
@@ -57,7 +59,7 @@ export default function Verification() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "white"
+            backgroundColor: "white",
           }}
         >
           <Typography component="h1" variant="h3" fontWeight="900">
