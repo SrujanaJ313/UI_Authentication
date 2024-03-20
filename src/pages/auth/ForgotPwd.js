@@ -32,13 +32,13 @@ export default function ForgotPwd() {
       });
     } else {
       toast("Username sent to email successfully!");
-      setTimeout(() => {
-        navigate("/login", {
-          state: {
-            email: values.emailOrMobile,
-          },
-        });
-      }, 2 * 1000);
+      // setTimeout(() => {
+      //   navigate("/login", {
+      //     state: {
+      //       email: values.emailOrMobile,
+      //     },
+      //   });
+      // }, 2 * 1000);
     }
   };
 
@@ -142,7 +142,9 @@ export default function ForgotPwd() {
                       fontSize: "1.2rem",
                     }}
                   >
-                    Continue
+                    {location?.state?.value !== "username?"
+                      ? "Continue"
+                      : "Send Email"}
                   </Button>
                 </form>
               );
@@ -182,7 +184,7 @@ export default function ForgotPwd() {
           </Button>
         </Box>
       </Container>
-      <ToastContainer />
+      <ToastContainer autoClose={false} />
     </>
   );
 }
