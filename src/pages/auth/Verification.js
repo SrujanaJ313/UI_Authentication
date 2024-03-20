@@ -130,7 +130,13 @@ export default function Verification() {
               // type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, textTransform: "none", fontSize: "1.2rem" }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                borderRadius: "30px",
+                textTransform: "none",
+                fontSize: "1.2rem",
+              }}
               onClick={handleSubmit}
             >
               Verify
@@ -151,6 +157,7 @@ export default function Verification() {
                 setOtpValue(initialOtpValues);
               }}
               underline="hover"
+              style={{ fontWeight:'bold'}}
             >
               Resend it
             </Link>
