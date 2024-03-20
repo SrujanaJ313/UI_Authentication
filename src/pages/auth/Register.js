@@ -131,6 +131,7 @@ export default function Register() {
                           <AccountCircleIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
                   <TextField
@@ -154,6 +155,7 @@ export default function Register() {
                           <LockIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
                   {formik.touched.password && formik.errors.password && (
@@ -199,6 +201,7 @@ export default function Register() {
                           <LockIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
                   <TextField
@@ -224,6 +227,7 @@ export default function Register() {
                           <BadgeIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
                   <TextField
@@ -240,7 +244,8 @@ export default function Register() {
                       Boolean(formik.errors.middleInitial)
                     }
                     helperText={
-                      formik.touched.middleInitial && formik.errors.middleInitial
+                      formik.touched.middleInitial &&
+                      formik.errors.middleInitial
                     }
                     label="Middle Initial"
                     InputProps={{
@@ -249,6 +254,7 @@ export default function Register() {
                           <BadgeIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
                   <TextField
@@ -273,6 +279,7 @@ export default function Register() {
                           <BadgeIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
                   <TextField
@@ -293,6 +300,7 @@ export default function Register() {
                           <MailIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
                   <TextField
@@ -318,6 +326,7 @@ export default function Register() {
                           <SmartphoneIcon />
                         </InputAdornment>
                       ),
+                      sx: { borderRadius: 30 },
                     }}
                   />
 
@@ -371,7 +380,7 @@ export default function Register() {
                       mb: 2,
                       textTransform: "none",
                       fontSize: "1.2rem",
-                      borderRadius:"30px",
+                      borderRadius: "30px",
                     }}
                   >
                     Register
@@ -400,12 +409,11 @@ export default function Register() {
           </Grid>
           <Button
             fullWidth
+            variant="contained"
             sx={{
               mt: 3,
               mb: 2,
-              border: "1px solid #dee2e6",
-              borderRadius:"30px",
-              color: "#000",
+              borderRadius: "30px",
               textTransform: "none",
               fontSize: "1.2rem",
             }}
