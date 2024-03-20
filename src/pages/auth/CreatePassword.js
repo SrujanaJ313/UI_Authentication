@@ -81,7 +81,7 @@ export default function CreatePassword() {
                     as={TextField}
                     size="small"
                     name="password"
-                    placeholder="Password"
+                    placeholder="Create Password"
                     type="password"
                     variant="outlined"
                     fullWidth
@@ -92,13 +92,14 @@ export default function CreatePassword() {
                     //   formik.touched.password && Boolean(formik.errors.password)
                     // }
                     // helperText={formik.touched.password && formik.errors.password}
-                    label="Password"
+                    label="Create Password"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
                           <LockIcon />
                         </InputAdornment>
                       ),
+                      sx:{ borderRadius: 30}
                     }}
                   />
                   {formik.touched.password && formik.errors.password && (
@@ -145,6 +146,7 @@ export default function CreatePassword() {
                           <LockIcon />
                         </InputAdornment>
                       ),
+                      sx:{ borderRadius: 30}
                     }}
                   />
                   <Captcha
