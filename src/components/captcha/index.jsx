@@ -33,6 +33,7 @@ export const Captcha = ({ formik, captcha, getCaptcha }) => {
         helperText={formik.touched.captcha && formik.errors.captcha && "Invalid Captcha"}
         label="Enter Captcha"
         InputLabelProps={{ shrink: true }}
+        InputProps={{ sx: { borderRadius: 30 } }}
       />
     </>
   );

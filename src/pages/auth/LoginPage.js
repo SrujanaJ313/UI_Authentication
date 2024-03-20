@@ -109,6 +109,7 @@ export default function LoginPage() {
                         <AccountCircleIcon />
                       </InputAdornment>
                     ),
+                    sx: { borderRadius: 30 },
                   }}
                 />
                 <Field
@@ -133,6 +134,7 @@ export default function LoginPage() {
                         <LockIcon />
                       </InputAdornment>
                     ),
+                    sx: { borderRadius: 30 },
                   }}
                 />
                 <Captcha
@@ -179,6 +181,7 @@ export default function LoginPage() {
             onClick={() =>
               navigate("/forgot-password", { state: { value: "username?" } })
             }
+            style={{ fontWeight: "bold" }}
           >
             Forgot username?
           </Link>
@@ -195,6 +198,7 @@ export default function LoginPage() {
             onClick={() =>
               navigate("/forgot-password", { state: { value: "password?" } })
             }
+            style={{ fontWeight: "bold" }}
           >
             Forgot password?
           </Link>
@@ -218,12 +222,11 @@ export default function LoginPage() {
         </Grid>
         <Button
           fullWidth
+          variant="contained"
           sx={{
             mt: 3,
             mb: 2,
-            border: "1px solid #dee2e6",
             borderRadius: "30px",
-            color: "#000",
             textTransform: "none",
             fontSize: "1.2rem",
           }}
