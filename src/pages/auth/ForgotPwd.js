@@ -122,6 +122,7 @@ export default function ForgotPwd() {
                         : "Email"
                     }
                     sx={{ width: "100%", mt: 2 }}
+                    InputProps={{ sx: { borderRadius: 30 } }}
                   />
                   <Captcha
                     formik={formik}
@@ -136,6 +137,7 @@ export default function ForgotPwd() {
                     sx={{
                       mt: 3,
                       mb: 2,
+                      borderRadius: "30px",
                       textTransform: "none",
                       fontSize: "1.2rem",
                     }}
@@ -165,11 +167,11 @@ export default function ForgotPwd() {
           </Grid>
           <Button
             fullWidth
+            variant="contained"
             sx={{
               mt: 3,
               mb: 2,
-              border: "1px solid #dee2e6",
-              color: "#000",
+              borderRadius: "30px",
               textTransform: "none",
               fontSize: "1.2rem",
             }}
