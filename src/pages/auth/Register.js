@@ -44,7 +44,7 @@ export default function Register() {
   };
 
   const validationSchema = Yup.object().shape({
-    userID: Yup.string().required("User ID is required"),
+    userID: Yup.string().required("UserID is required"),
     // password: Yup.string().required("Password is required"),
     password: Yup.string()
       .required("Password is required")
