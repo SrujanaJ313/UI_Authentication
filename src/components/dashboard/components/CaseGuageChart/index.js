@@ -14,7 +14,7 @@ const CaseGuageChart = () => {
 
   const options = {
     height: 200,
-    width: 644,
+    width: 500,
     greenFrom: 75,
     greenTo: 100,
     redFrom: 0,
@@ -34,7 +34,15 @@ const CaseGuageChart = () => {
     };
   });
 
-  return <Chart chartType="Gauge" data={data} options={options} className="flex items-center w-full h-full justify-center"/>;
+  // return <Chart chartType="Gauge" data={data} options={options} className="flex items-center w-full h-full justify-center"/>;
+  return (
+      <Chart
+        chartType="Gauge"
+        data={data}
+        options={options}
+        // className="flex w-full h-full"
+      />
+  );
 };
 
 export default CaseGuageChart;

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
+// import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid";
 import { styled } from "@mui/material";
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({

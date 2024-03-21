@@ -5,18 +5,18 @@ import Button from '@mui/material/Button';
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import FormGroup from '@mui/material/FormGroup';
-import theme from "../../theme/theme";
+// import theme from "../../theme/theme";
 import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { FormControl, FormHelperText } from "@mui/material";
-import { Formik, ErrorMessage } from "formik";
+// import { FormControl, FormHelperText } from "@mui/material";
+import { Formik } from "formik";
 import {addNewClaimantValidationSchema} from '../../helpers/Validation';
 export default function AddNewClaimant(props) {
     const { closeModalPopup } = props;
 
-    const handleSubmit = (event) => {
-    }
+    // const handleSubmit = (event) => {
+    // }
 
     const handleKeyPress = (event) => {
         const charCode = event.which ? event.which : event.keyCode;

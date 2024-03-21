@@ -5,38 +5,26 @@ const CaseStatusCard = () => {
   const data = [
     {
       status: "New",
-      // className:
-      //   "border-sky-300 border bg-sky-300 hover:-translate-y-1 hover:bg-sky-300 duration-300",
-      className: {
-        backgroundColor: "#0000ff",
-      },
+      className:
+        "border-sky-300 border bg-sky-300 hover:-translate-y-1 hover:bg-sky-300 duration-300",
       numberOfCases: 20,
     },
     {
       status: "High Priority",
-      // className:
-      //   "border-rose-400 border bg-rose-400 hover:-translate-y-1 hover:bg-rose-400 duration-300",
-      className: {
-        backgroundColor: "#F33A6A",
-      },
+      className:
+        "border-rose-400 border bg-rose-400 hover:-translate-y-1 hover:bg-rose-400 duration-300",
       numberOfCases: 30,
     },
     {
       status: "Overdue",
-      // className:
-      //   "border-orange-400 border bg-orange-400 hover:-translate-y-1 hover:bg-orange-400 duration-300",
-      className: {
-        backgroundColor: "orange",
-      },
+      className:
+        "border-orange-400 border bg-orange-400 hover:-translate-y-1 hover:bg-orange-400 duration-300",
       numberOfCases: 10,
     },
     {
       status: "Bankruptcy",
-      // className:
-      //   "border-emerald-300 border bg-emerald-300 hover:-translate-y-1 hover:bg-emerald-300 duration-300",
-      className: {
-        backgroundColor: "#90EE90",
-      },
+      className:
+        "border-emerald-300 border bg-emerald-300 hover:-translate-y-1 hover:bg-emerald-300 duration-300",
       numberOfCases: 50,
     },
   ];
@@ -44,49 +32,24 @@ const CaseStatusCard = () => {
   const [cardData, setCardData] = useState(data);
 
   const handleCardClick = (index) => {
-    const mappedData = cardData.map((card, cardIndex) => {
-      return { ...card, isSelected: cardIndex === index };
-    });
+    const mappedData = cardData.map(
+      (card, cardIndex) => {
+        return { ...card, isSelected: cardIndex === index };
+      }
+    );
     setCardData(mappedData);
   };
-  //"border-sky-300 border bg-sky-300 hover:-translate-y-1 hover:bg-sky-300 duration-300"
+
   return (
-    // <div className="flex w-full h-full items-center justify-between gap-6">
-    <div
-      style={{
-        display: "flex",
-        width: "100%",
-        height: "100%",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
+    <div className="flex w-full h-full items-center justify-between gap-6 ">
       {cardData.map((caseModel, index) => (
         <div
-          // className={`flex w-full flex-1 h-full cursor-pointer rounded p-5 items-center justify-between ${caseModel.className}`}
-          style={{
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            flex: "1",
-            cursor: "pointer",
-            alignItems: "center",
-            justifyContent: "space-between",
-            backgroundColor: `${caseModel.className.backgroundColor}`,
-            margin:"8px"
-          }}
-          // className={caseModel.className}
+          className={`flex w-full flex-1 h-full cursor-pointer rounded p-5 items-center justify-between ${caseModel.className}`}
           key={index}
         >
           <div
             key={caseModel.status}
-            // className={`flex flex-col items-start justify-center`}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              justifyContent: "center",
-            }}
+            className={`flex flex-col items-start justify-center `}
             onClick={() => handleCardClick(index)}
           >
             <Typography variant="h3" className="text-gray-700">

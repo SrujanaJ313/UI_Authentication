@@ -16,7 +16,7 @@ function MainLayout() {
           <DashboardLayout />
         </Container>
       </Box>
-      <div className="absolute bottom-0 left-0 w-full h-14 bg-slate-500 text-white app-footer"></div>
+      {/* <div className="absolute bottom-0 left-0 w-full h-14 bg-slate-500 text-white app-footer"></div> */}
     </Box>
   );
 }

@@ -1,4 +1,5 @@
-import Dialog, { DialogProps } from "@mui/material/Dialog";
+import Dialog from "@mui/material/Dialog";
+// import Dialog, { DialogProps } from "@mui/material/Dialog";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 import theme from "../../theme/theme";
@@ -13,7 +14,7 @@ function CustomModal(props) {
     const {
         title,
         children,
-        disableScroll = false,
+        // disableScroll = false,
         open,
         onClose,
         maxWidth = "sm",

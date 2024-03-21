@@ -47,7 +47,8 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="absolute">
+      {/* <AppBar position="absolute"> */}
+      <AppBar>
         <Toolbar
           sx={{
             pr: "24px", // keep right padding when drawer closed
