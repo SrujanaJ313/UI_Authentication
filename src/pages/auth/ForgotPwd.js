@@ -42,9 +42,13 @@ export default function ForgotPwd() {
     }
   };
 
+  const errorMessage =
+    location?.state?.value !== "username?"
+      ? "Email/Mobile Number is required"
+      : "Email is required";
   const validationSchema = Yup.object().shape({
     emailOrMobile: Yup.string()
-      .required("Email/Mobile Number is required")
+      .required(errorMessage)
       .matches(
         /^(?:[a-zA-Z0-9._-]+@(?:affiliate\.nhes\.nh\.gov))|(?:\d{10})$/,
         "Invalid email/mobile number"
