@@ -19,9 +19,13 @@ export default function ForgotPwd() {
   const [captcha, setCaptcha] = useState(() =>
     Math.random().toString(36).slice(8)
   );
+  const [sendEmail, setSendEmail] = useState(false);
+  const [timer, setTimer] = useState(60);
+
   const getCaptcha = (captchaValue) => {
     setCaptcha(captchaValue);
   };
+
 
   const handleSubmit = (values) => {
     if (location?.state?.value !== "username?") {
@@ -32,13 +36,23 @@ export default function ForgotPwd() {
       });
     } else {
       toast("Username sent to email successfully!");
-      // setTimeout(() => {
-      //   navigate("/login", {
-      //     state: {
-      //       email: values.emailOrMobile,
-      //     },
-      //   });
-      // }, 2 * 1000);
+      setSendEmail(!sendEmail);
+      const intervalId = setInterval(() => {
+        // navigate("/login", {
+        //   state: {
+        //     email: values.emailOrMobile,
+        //   },
+        // });
+        
+        setTimer((prevTimer) => {
+          if (prevTimer === 1) {
+            setSendEmail(false);
+            setTimer(60);
+            clearInterval(intervalId);
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
     }
   };
 
@@ -145,11 +159,20 @@ export default function ForgotPwd() {
                       textTransform: "none",
                       fontSize: "1.2rem",
                     }}
+                    disabled={
+                      location?.state?.value === "username?" && sendEmail
+                    }
                   >
                     {location?.state?.value !== "username?"
                       ? "Continue"
                       : "Send Email"}
                   </Button>
+                  {sendEmail && (
+                    <span className="text-sm font-bold">
+                      Didn't received username? resend email after 00:
+                      {timer.toString().length === 1 ? `0${timer}` : timer} seconds
+                    </span>
+                   )} 
                 </form>
               );
             }}
@@ -188,7 +211,7 @@ export default function ForgotPwd() {
           </Button>
         </Box>
       </Container>
-      <ToastContainer autoClose={false} />
+      <ToastContainer autoClose={timer * 1000} />
     </>
   );
 }
