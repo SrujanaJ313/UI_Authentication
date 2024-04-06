@@ -65,6 +65,7 @@ function Upload({ button }: any) {
         variant="contained"
         tabIndex={-1}
         onClick={() => fileInput.click()}
+        disabled={Object.values(files).length === 2}
       >
         {button.text}
       </Button>
