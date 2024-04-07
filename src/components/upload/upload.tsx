@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import Button from "@mui/material/Button";
 
 function Upload({ button }: any) {
-  const [files, setFiles]: any = useState({});
+  const [files, setFiles]: any = useState([]);
   const [errors, setErrors]: any = useState("");
   let fileInput: any = useRef(null);
 
@@ -33,18 +33,27 @@ function Upload({ button }: any) {
 
   const onClickSaveToLaterNewHire = (event: any) => {
     const selectedFile: any = event.target.files[0];
+    // console.log("onClickSaveToLaterNewHire:::", selectedFile);
     const isValidFile: boolean = validateSelectedFile(selectedFile);
+    // console.log("isValid:::", isValidFile);
+
     if (!isValidFile) {
       return;
     }
+
     setErrors("");
-    const uploadedFiles: any = {};
-    if (selectedFile) {
-      uploadedFiles[selectedFile.name] = selectedFile;
-      setFiles((prevState: any) => ({ ...prevState, ...uploadedFiles }));
-    }
+    const uploadedFiles: any = [...files];
+    uploadedFiles.push(selectedFile);
+    setFiles(uploadedFiles);
   };
 
+  const deleteFile = (fileName: string) => {
+    const tempFiles: any = [...files];
+    const filteredFiles: any = tempFiles?.filter(
+      (tFile: any) => tFile.name !== fileName
+    );
+    setFiles(filteredFiles);
+  };
   const callbak = {
     onClickSaveToLaterNewHire,
   };
@@ -65,14 +74,17 @@ function Upload({ button }: any) {
         variant="contained"
         tabIndex={-1}
         onClick={() => fileInput.click()}
-        disabled={Object.values(files).length === 2}
+        disabled={files.length === 2}
       >
         {button.text}
       </Button>
-      {!!Object.keys(files).length &&
-        Object.values(files)?.map((file: any) => (
-          <div key={file.name}>
-            {file.name} {Math.round(file.size / 1024)} KB
+      {!!files?.length &&
+        files?.map((file: any) => (
+          <div style={{ display:'flex', justifyContent:'space-between'}}  key={file.name}>
+            <div>
+              {file.name} {Math.round(file.size / 1024)} KB
+            </div>
+            <div style={{cursor:'pointer'}} onClick={() => deleteFile(file.name)}>delete</div>
           </div>
         ))}
       {errors && <p>{errors}</p>}
