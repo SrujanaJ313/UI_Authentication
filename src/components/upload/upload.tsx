@@ -6,6 +6,41 @@ function Upload({ button }: any) {
   const [errors, setErrors]: any = useState("");
   let fileInput: any = useRef(null);
 
+  const getCurrentDate = () => {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const date = new Date();
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month} ${day}, ${year}`;
+  };
+  console.log(getCurrentDate());
+
+  const getCurrentEasternTime = () => {
+    const options: any = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: "America/New_York",
+    };
+    const easternTime = new Date().toLocaleString("en-US", options);
+    return easternTime;
+  };
+  console.log(getCurrentEasternTime());
+
   const validateSelectedFile = (selectedFile: any) => {
     console.log("selectedFile::::", selectedFile);
 
@@ -80,11 +115,19 @@ function Upload({ button }: any) {
       </Button>
       {!!files?.length &&
         files?.map((file: any) => (
-          <div style={{ display:'flex', justifyContent:'space-between'}}  key={file.name}>
+          <div
+            style={{ display: "flex", justifyContent: "space-between" }}
+            key={file.name}
+          >
             <div>
               {file.name} {Math.round(file.size / 1024)} KB
             </div>
-            <div style={{cursor:'pointer'}} onClick={() => deleteFile(file.name)}>delete</div>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => deleteFile(file.name)}
+            >
+              delete
+            </div>
           </div>
         ))}
       {errors && <p>{errors}</p>}
@@ -98,6 +141,9 @@ function Upload({ button }: any) {
       >
         Submit
       </Button>
+      <h1>
+        {getCurrentDate()} at {getCurrentEasternTime()}
+      </h1>
     </div>
   );
 }
