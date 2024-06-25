@@ -13,8 +13,10 @@ import {
   DashboardOutlined,
   TaskOutlined,
   CalendarMonthOutlined,
-  PagesOutlined
+  PagesOutlined,
+  PersonOutlined
 } from "@mui/icons-material";
+// import jwt from 'jsonwebtoken';
 
 const drawerWidth = 300;
 const MUIDrawer = styled(Drawer, {
@@ -75,11 +77,29 @@ const LeftNavBar = () => {
             </ListItemIcon>
             <MUIListItemText primary="Pages" />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton onClick={() => {
+            //  const userId = '12345';
+            //  const userName = 'john_doe';
+            //  const token = jwt.sign({ userId, userName }, 'your_secret_key');
+            //  window.open(`http://localhost:3002?token=${token}`, '_blank');
+             window.open(`http://localhost:3002/calendar`, '_blank');
+          }}>
             <ListItemIcon>
               <CalendarMonthOutlined className="text-slate-600"/>
             </ListItemIcon>
             <MUIListItemText primary="Calendar" />
+          </ListItemButton>          
+          <ListItemButton onClick={() => {
+            //  const userId = '12345';
+            //  const userName = 'john_doe';
+            //  const token = jwt.sign({ userId, userName }, 'your_secret_key');
+            //  window.open(`http://localhost:3001?token=${token}`, '_blank');
+             window.open(`http://localhost:3001/userProfile`, '_blank');
+          }}>
+            <ListItemIcon>
+              <PersonOutlined className="text-slate-600"/>
+            </ListItemIcon>
+            <MUIListItemText primary="Profile" />
           </ListItemButton>          
         </React.Fragment>
       </List>
